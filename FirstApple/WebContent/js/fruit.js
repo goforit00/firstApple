@@ -1,0 +1,13 @@
+window.onload=function()
+{
+	//控制"换地址"栏的显隐
+	$(".change_addr").mouseenter(function()
+	{
+		//$(".other_addr").slideDown("slow");
+		$(".other_addr").slideDown("slow");
+	});
+	$(".other_addr").mouseleave(function()
+	{
+		$(".other_addr").slideUp("slow");
+	});
+}

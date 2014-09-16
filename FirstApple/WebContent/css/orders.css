@@ -1,0 +1,76 @@
+body,div,h1,p,img,span,ul,li,a{
+	padding:0 0;
+	margin:0 0;
+	border:0 none;
+}
+body,button, input, select, textarea{
+	font: 15px/1.5 tahoma, arial, \5b8b\4f53, sans-serif;
+}
+h1, h2, h3, h4, h5, h6 { font-size: 100%; }
+a{
+	text-decoration:none;
+}
+li{
+	list-style:none;
+}
+body{
+	background-color: #6fdf6f;
+}
+.out{
+	width: 970px;
+	margin: 0 auto;
+	margin-top: 15px;
+}
+.title{
+	font-size: 2.5em;
+	font-family: "楷体";
+	width: 100%;
+	border-bottom: solid 1px black;
+}
+.usr_info{
+	font-family: "微软雅黑";
+	margin-left: 10px;
+}
+.single_order{
+	width: 280px;
+	height: 270px;
+	float: left;
+	margin-left: 33px;
+	margin-top: 12px;
+}
+.single_order_top{
+	display: block;
+	width: 280px;
+	height: 30px;
+	background: url("../img/single_order_top.png");
+}
+.single_order_bottom{
+	display: block;
+	width: 280px;
+	height: 27px;
+	background: url("../img/single_order_bottom.png");
+}
+.order_con{
+	background-color: #fbcd42;
+	height:213px;
+	padding-left: 19px;
+}
+.order_time{
+	font-family: "楷体";
+	font-size: 1.2em;
+}
+.order_itms{
+	padding-left: 9px;
+}
+.order_item{
+	font-family: "楷体";
+	font-size: 1.2em;
+}
+.order_price{
+	padding-left: 10px;
+}
+.order_sum{
+	font-family: "楷体";
+	font-size: 1.2em;
+	padding-left: 28px;
+}

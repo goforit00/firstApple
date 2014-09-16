@@ -1,0 +1,145 @@
+body,div,h1,p,img,span,ul,li,a,h2,h3{
+	padding:0 0;
+	margin:0 0;
+	border:0 none;
+}
+body,button, input, select, textarea{
+	font: 15px/1.5 tahoma, arial, \5b8b\4f53, sans-serif;
+}
+h1, h2, h3, h4, h5, h6 { font-size: 100%; }
+a{
+	text-decoration:none;
+}
+li{
+	list-style:none;
+}
+body{
+	background-color: #6fdf6f;
+	padding-bottom: 30px;
+	padding-top: 15px;
+	cursor: default;
+}
+.out{
+	width: 1070px;
+	background-color: #e0ecf0;
+	margin: 0 auto;
+	padding-bottom: 30px;
+}
+.log{
+	background-color: #6fdf6f;
+}
+#choose{
+	position: absolute;
+	top: 293px;
+	left: -35px;
+	width: 30px;
+	height: 33px;
+}
+.log li{
+	float: left;
+	margin-left: 6px;
+	font-family: "微软雅黑";
+	font-weight: bold;
+	color: #606960;
+}
+.log li:hover{
+	color: black;
+	cursor: pointer;
+}
+#log_spe:hover{
+	color: #606960;
+	cursor: default;
+}
+.head{
+	height: 150px;
+	background: url("../img/head_back.png")
+}
+.head h1{
+	font-size: 3em;
+	width: 200px;
+	height: 75px;
+	background-color: green;
+	background: url("../img/head_cai.png") left bottom no-repeat;
+	padding-top: 75px;
+	padding-left: 85px;
+	margin-left: 80px;
+	font-family: "楷体";
+	float: left;
+}
+.address{
+	float: left;
+	margin-top: 105px;
+	font-family: "楷体";
+	font-size: 1.3em;
+	position: relative;
+	cursor: default;
+}
+.change_addr{
+	font-size: 0.7em;
+	margin-left: 8px;
+	color: grey;
+}
+.change_addr:hover{
+	color: black;
+}
+.other_addr{
+	background: url("../img/addr_back.png");
+	display: none;
+	padding: 0px 10px 2px 5px;
+	position: absolute;
+	top: 28px;
+	left: -5px;
+	z-index: 10;
+}
+.other_addr li{
+	cursor: pointer;
+}
+.other_addr li:hover{
+	text-decoration: underline;
+}
+.shops{
+	padding-left: 80px;
+	margin-top: 20px;
+}
+.shops li{
+	width: 271px;
+	float: left;
+	margin-right: 49px;
+	margin-bottom: 25px;
+	border: solid 1px #5d5a5a;
+	position: relative;
+}
+.shops li h3{
+	font-family: "楷体";
+	font-size: 1.4em;
+	padding-left: 20px;
+	border-bottom: 1px dashed #5d5a5a;
+	margin: 0px 5px;
+}
+.shops li p{
+	margin: 0px 5px;
+	text-indent: 2em;
+	font-family: "楷体";
+
+}
+.shops li a{
+	display: none;
+	width: 271px;
+	height: 38px;
+	font-family: "楷体";
+	font-size: 1.4em;
+	text-align: center;
+	background: url("../img/shop_select.png");
+	position: absolute;
+	bottom: 0px;
+}
+.shops .focused a{
+	display: block;
+}
+.shops li a:hover{
+	cursor: pointer;
+}
+
+.empty{
+	clear: both;
+}
