@@ -24,14 +24,13 @@ public class UserOperationToken {
      */
     private Date expirationTime;
 
-    public static UserOperationToken build(String username,String token,UserOperationType type){
+    public static UserOperationToken build(String username,String token,UserOperationType type,Date expirationTime){
         UserOperationToken operationToken=new UserOperationToken();
         operationToken.setUsername(username);
         operationToken.setToken(token);
         operationToken.setType(type);
         operationToken.setCreatedTime(new Date());
-        //TODO
-        operationToken.setExpirationTime(null);
+        operationToken.setExpirationTime(expirationTime);
 
         return operationToken;
 

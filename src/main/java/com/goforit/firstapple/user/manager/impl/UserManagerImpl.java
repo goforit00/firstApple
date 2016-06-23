@@ -6,6 +6,8 @@ import com.goforit.firstapple.common.model.SystemConfigInfo;
 import com.goforit.firstapple.common.service.MailContextGeneratorUtil;
 import com.goforit.firstapple.common.utils.MailSender;
 import com.goforit.firstapple.common.utils.StringGenerator;
+import com.goforit.firstapple.user.factory.UserOperationTokenHandlerFactory;
+import com.goforit.firstapple.user.handlers.UserOperationTokenHandler;
 import com.goforit.firstapple.user.manager.UserManager;
 import com.goforit.firstapple.user.mapper.UserMapper;
 import com.goforit.firstapple.user.mapper.UserOperationTokenMapper;
@@ -102,10 +104,11 @@ public class UserManagerImpl implements UserManager {
     @Override
     public UserOperationToken generateUserOperationToken(String username,UserOperationType type) {
 
-        //TODO 根据type来变动
-        String token= StringGenerator.generator(6);
+        UserOperationTokenHandler handler=UserOperationTokenHandlerFactory.INSTANCE.getHandler(type);
 
-        UserOperationToken userOperationToken=UserOperationToken.build(username, token, type);
+        String token= handler.buildToken();
+
+        UserOperationToken userOperationToken=UserOperationToken.build(username, token, type,handler.getExpiredTime());
         userOperationTokenMapper.create(userOperationToken);
         return userOperationToken;
     }
