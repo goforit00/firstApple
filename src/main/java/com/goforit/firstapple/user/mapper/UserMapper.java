@@ -19,5 +19,7 @@ public interface UserMapper {
 
     User update(User user);
 
+    User checkUserLogin(User user);
+
     void deleteByUsername(String username);
 }

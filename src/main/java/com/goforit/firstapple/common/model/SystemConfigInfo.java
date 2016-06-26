@@ -7,7 +7,7 @@ import java.util.Date;
  */
 public class SystemConfigInfo {
 
-    private String id;
+    private long id;
 
     private String key;
 
@@ -17,11 +17,11 @@ public class SystemConfigInfo {
 
     private Date modifiedTime;
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 

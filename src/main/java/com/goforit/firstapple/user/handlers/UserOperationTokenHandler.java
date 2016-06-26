@@ -7,7 +7,7 @@ import java.util.Date;
  */
 public interface UserOperationTokenHandler {
 
-    Date getExpiredTime();
+    Date getExpiredTime(Date currentDate);
 
-    String buildToken();
+    String buildToken(Object obj);
 }

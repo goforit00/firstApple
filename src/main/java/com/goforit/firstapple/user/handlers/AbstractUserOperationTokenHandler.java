@@ -21,16 +21,16 @@ abstract public class AbstractUserOperationTokenHandler implements UserOperation
 
 
 
-    public String buildToken(){
+    public String buildToken(Object obj){
         return StringGenerator.generator(getTokenLen());
     }
 
 
 
-    public Date getExpiredTime(){
+    public Date getExpiredTime(Date currentDate){
 
         Calendar calendar=Calendar.getInstance();
-        calendar.setTime(new Date());
+        calendar.setTime(currentDate);
         calendar.add(Calendar.SECOND,getDuration());
 
         Date expiredDate=calendar.getTime();

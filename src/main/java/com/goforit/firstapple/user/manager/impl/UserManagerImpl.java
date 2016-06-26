@@ -5,19 +5,23 @@ import com.goforit.firstapple.common.mapper.SystemConfigMapper;
 import com.goforit.firstapple.common.model.SystemConfigInfo;
 import com.goforit.firstapple.common.service.MailContextGeneratorUtil;
 import com.goforit.firstapple.common.utils.MailSender;
-import com.goforit.firstapple.common.utils.StringGenerator;
 import com.goforit.firstapple.user.factory.UserOperationTokenHandlerFactory;
 import com.goforit.firstapple.user.handlers.UserOperationTokenHandler;
 import com.goforit.firstapple.user.manager.UserManager;
 import com.goforit.firstapple.user.mapper.UserMapper;
 import com.goforit.firstapple.user.mapper.UserOperationTokenMapper;
+import com.goforit.firstapple.user.mapper.UserTokenMapper;
 import com.goforit.firstapple.user.model.User;
 import com.goforit.firstapple.user.model.UserOperationToken;
+import com.goforit.firstapple.user.model.UserToken;
+import com.goforit.firstapple.user.model.enums.UserLoginType;
 import com.goforit.firstapple.user.model.enums.UserOperationType;
 import com.goforit.firstapple.user.model.enums.UserStatus;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.Date;
 
 /**
  * Created by junqingfjq on 16/6/23.
@@ -40,6 +44,9 @@ public class UserManagerImpl implements UserManager {
 
     @Autowired
     private UserOperationTokenMapper userOperationTokenMapper;
+
+    @Autowired
+    private UserTokenMapper userTokenMapper;
 
     @Override
     public User register(User user) throws UserRegisterError{
@@ -74,6 +81,9 @@ public class UserManagerImpl implements UserManager {
             throw new UserRegisterError("phone has existed");
         }
 
+        //密码加密
+        user.encryptionPassword();
+
         userMapper.create(user);
 
         User registeredUser=userMapper.findByUserName(username);
@@ -106,9 +116,9 @@ public class UserManagerImpl implements UserManager {
 
         UserOperationTokenHandler handler=UserOperationTokenHandlerFactory.INSTANCE.getHandler(type);
 
-        String token= handler.buildToken();
+        String token= handler.buildToken(null);
 
-        UserOperationToken userOperationToken=UserOperationToken.build(username, token, type,handler.getExpiredTime());
+        UserOperationToken userOperationToken=UserOperationToken.build(username, token, type,handler.getExpiredTime(new Date()));
         userOperationTokenMapper.create(userOperationToken);
         return userOperationToken;
     }
@@ -137,5 +147,46 @@ public class UserManagerImpl implements UserManager {
         mailSender.sendMail(userMail,srcMailConfigInfo.getValue(),REGISTER_MAIL_SUB,mailContext);
 
         return true;
+    }
+
+    @Override
+    public UserToken Login(String userInfo, String password, UserLoginType loginType) {
+
+        //验证
+        User loginUser=User.buildLoginCheckUser(userInfo,password,loginType);
+        User user=userMapper.checkUserLogin(loginUser);
+
+        if(null!=user){
+            return null;
+        }
+
+        //token
+        return generatorUserToken(user.getId());
+    }
+
+    @Override
+    public User verifyToken(String token) {
+
+        UserToken userToken=userTokenMapper.findByToken(token);
+        if(null==userToken){
+            return null;
+        }
+
+        //更新token
+        userToken.updateTime(new Date());
+        userTokenMapper.updateExpiredTime(userToken);
+
+        return userMapper.get(userToken.getUserId());
+
+    }
+
+    @Override
+    public UserToken generatorUserToken(String userId) {
+
+        userTokenMapper.deleteByUserId(userId);
+        UserToken token=UserToken.buildUserToken(userId);
+        userTokenMapper.create(token);
+
+        return token;
     }
 }

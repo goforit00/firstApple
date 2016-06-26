@@ -1,5 +1,7 @@
 package com.goforit.firstapple.user.model;
 
+import com.goforit.firstapple.common.utils.EncryptionUtil;
+import com.goforit.firstapple.user.model.enums.UserLoginType;
 import com.goforit.firstapple.user.model.enums.UserStatus;
 
 import java.util.Date;
@@ -32,6 +34,32 @@ public class User {
     private Date lastRegisterTime;
 
     private Date modifiedTime;
+
+    public static User buildLoginCheckUser(String userInfo,String password,UserLoginType type){
+        User user=new User();
+        switch (type){
+            case USERNAME:
+                user.setUsername(userInfo);
+                break;
+            case PHONE:
+                user.setPhone(userInfo);
+                break;
+            case EMAIL:
+                user.setEmail(userInfo);
+                break;
+            default:
+                user.setUsername(userInfo);
+                break;
+        }
+        user.setPassword(EncryptionUtil.encryptMD5(password));
+
+        return user;
+    }
+
+    public User encryptionPassword(){
+        this.setPassword(EncryptionUtil.encryptMD5(this.password));
+        return this;
+    }
 
     public String getId() {
         return id;

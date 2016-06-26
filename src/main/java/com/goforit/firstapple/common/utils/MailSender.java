@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
  * Created by junqingfjq on 16/6/23.
  */
 
-@Service
+@Service(value = "mailSender")
 public class MailSender {
 
     @Autowired

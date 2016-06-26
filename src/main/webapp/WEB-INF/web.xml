@@ -5,9 +5,25 @@
 
 	<display-name>Spring MVC Application</display-name>
 
+    <!--<context-param>-->
+        <!--<param-name>contextConfigLocation</param-name>-->
+        <!--<param-value>-->
+            <!--/WEB-INF/spring/core-service.xml,-->
+            <!--/WEB-INF/spring/core-dal.xml-->
+        <!--</param-value>-->
+    <!--</context-param>-->
+
+    <!--<listener>-->
+        <!--<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>-->
+    <!--</listener>-->
+
     <servlet>
 		<servlet-name>mvc-dispatcher</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>/WEB-INF/mvc-dispatcher-servlet.xml,/WEB-INF/spring/core-dal.xml,/WEB-INF/spring/core-service.xml</param-value>
+        </init-param>
         <load-on-startup>1</load-on-startup>
 	</servlet>
 

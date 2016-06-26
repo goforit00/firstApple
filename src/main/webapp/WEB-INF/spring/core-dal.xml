@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                     http://www.springframework.org/schema/context
+                     http://www.springframework.org/schema/context/spring-context-3.0.xsd
+                     http://www.springframework.org/schema/aop
+                     http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+                     http://www.springframework.org/schema/tx
+                     http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+                     http://mybatis.org/schema/mybatis-spring
+                     http://mybatis.org/schema/mybatis-spring.xsd"
+       default-autowire="byName">
+
+    <!-- persistence config -->
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <bean id='dataSource' class="org.apache.commons.dbcp.BasicDataSource">
+        <property name='driverClassName'>
+            <value>com.mysql.jdbc.Driver</value>
+        </property>
+        <property name='url'>
+            <value>jdbc:mysql://${db_url}/${db_schema}?useUnicode=true&amp;characterEncoding=utf8</value>
+        </property>
+        <property name='username'>
+            <value>${db_username}</value>
+        </property>
+        <property name='password'>
+            <value>${db_password}</value>
+        </property>
+    </bean>
+
+    <!-- 事务模板 -->
+    <bean id="transactionTemplate"
+          class="org.springframework.transaction.support.TransactionTemplate">
+        <property name="transactionManager" ref="transactionManager" />
+    </bean>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="mapperLocations" value="/WEB-INF/spring/sqlmap/*.xml"/>
+        <!--<property name="typeAliasesPackage" value="com.goforit.firstapple"/>-->
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage"
+                  value="com.goforit.firstapple.user.mapper;com.goforit.firstapple.common.mapper"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+
+
+
+</beans>

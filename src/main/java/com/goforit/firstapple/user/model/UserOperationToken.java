@@ -9,7 +9,7 @@ import java.util.Date;
  */
 public class UserOperationToken {
 
-    private String id;
+    private long id;
 
     private String username;
 
@@ -36,11 +36,11 @@ public class UserOperationToken {
 
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 

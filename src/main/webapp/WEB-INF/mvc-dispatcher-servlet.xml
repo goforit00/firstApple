@@ -1,12 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
-
-    <context:component-scan base-package="com.springapp.mvc"/>
-    <context:component-scan base-package="com.goforit.firstapple"/>
+                     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                     http://www.springframework.org/schema/context
+                     http://www.springframework.org/schema/context/spring-context-3.0.xsd
+                     http://www.springframework.org/schema/aop
+                     http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+                     http://www.springframework.org/schema/tx
+                     http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+                     http://mybatis.org/schema/mybatis-spring
+                     http://mybatis.org/schema/mybatis-spring.xsd"
+       default-autowire="byName">
 
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -15,21 +24,4 @@
     </bean>
 
 
-    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-        <property name="host" value="smtp.sina.com"/>
-        <property name="protocol" value="smtp" />
-        <!-- 465 for Gamil -->
-        <property name="port" value="25"/>
-        <property name="username" value="xxx@sina.com"/>
-        <property name="password" value="xxx"/>
-        <property name="javaMailProperties">
-            <props>
-                <prop key="mail.transport.protocol">smtp</prop>
-                <prop key="mail.smtp.auth">true</prop>
-                <!-- true for Gamil -->
-                <prop key="mail.smtp.starttls.enable">false</prop>
-                <prop key="mail.debug">true</prop>
-            </props>
-        </property>
-    </bean>
 </beans>
