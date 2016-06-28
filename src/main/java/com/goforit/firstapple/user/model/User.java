@@ -17,6 +17,11 @@ public class User {
 
     private transient String password;
 
+    /**
+     * 身份证号码
+     */
+    private transient String idCardNum;
+
     private String phone;
 
     private String email;
@@ -31,7 +36,7 @@ public class User {
 
     private Date lastLoginTime;
 
-    private Date lastRegisterTime;
+    private Date registerTime;
 
     private Date modifiedTime;
 
@@ -83,6 +88,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getIdCardNum() {
+        return idCardNum;
+    }
+
+    public void setIdCardNum(String idCardNum) {
+        this.idCardNum = idCardNum;
     }
 
     public String getPhone() {
@@ -141,12 +154,12 @@ public class User {
         this.lastLoginTime = lastLoginTime;
     }
 
-    public Date getLastRegisterTime() {
-        return lastRegisterTime;
+    public Date getRegisterTime() {
+        return registerTime;
     }
 
-    public void setLastRegisterTime(Date lastRegisterTime) {
-        this.lastRegisterTime = lastRegisterTime;
+    public void setRegisterTime(Date registerTime) {
+        this.registerTime = registerTime;
     }
 
     public Date getModifiedTime() {

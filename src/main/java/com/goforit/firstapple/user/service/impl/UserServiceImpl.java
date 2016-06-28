@@ -7,7 +7,9 @@ import com.goforit.firstapple.user.model.UserOperationToken;
 import com.goforit.firstapple.user.model.UserToken;
 import com.goforit.firstapple.user.model.enums.UserLoginType;
 import com.goforit.firstapple.user.model.enums.UserOperationType;
+import com.goforit.firstapple.user.model.enums.UserType;
 import com.goforit.firstapple.user.service.UserService;
+import com.google.common.base.Preconditions;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private MailSender mailSender;
 
+    @Autowired
     private TransactionTemplate transactionTemplate;
 
     @Override
@@ -67,8 +70,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserToken login(String username, String password,UserLoginType loginType) {
-        return userManager.Login(username,password,loginType);
+    public UserToken login(String username, String password,UserLoginType loginType, UserType userType) {
+        return userManager.login(username, password, loginType,userType);
+    }
+
+    @Override
+    public boolean logout(String token) {
+
+        Preconditions.checkArgument(StringUtils.isNotBlank(token),"logout token not be null");
+
+        return userManager.logout(token);
     }
 
     @Override

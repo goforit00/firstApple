@@ -54,10 +54,9 @@
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage"
-                  value="com.goforit.firstapple.user.mapper;com.goforit.firstapple.common.mapper"/>
+                  value="com.goforit.firstapple.user.mapper;com.goforit.firstapple.common.mapper;com.goforit.firstapple.forum.mapper"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
-
 
 
 </beans>

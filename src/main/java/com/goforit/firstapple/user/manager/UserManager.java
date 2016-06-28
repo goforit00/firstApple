@@ -6,6 +6,7 @@ import com.goforit.firstapple.user.model.UserOperationToken;
 import com.goforit.firstapple.user.model.UserToken;
 import com.goforit.firstapple.user.model.enums.UserLoginType;
 import com.goforit.firstapple.user.model.enums.UserOperationType;
+import com.goforit.firstapple.user.model.enums.UserType;
 
 /**
  * Created by junqingfjq on 16/6/23.
@@ -22,7 +23,9 @@ public interface UserManager {
 
     boolean sendUserRegisterMail(String username,String userMail);
 
-    UserToken Login(String userInfo,String password,UserLoginType loginType);
+    UserToken login(String userInfo, String password, UserLoginType loginType, UserType userType);
+
+    boolean logout(String token);
 
     User verifyToken(String token);
 

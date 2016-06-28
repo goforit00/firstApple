@@ -17,9 +17,14 @@ import com.goforit.firstapple.user.model.UserToken;
 import com.goforit.firstapple.user.model.enums.UserLoginType;
 import com.goforit.firstapple.user.model.enums.UserOperationType;
 import com.goforit.firstapple.user.model.enums.UserStatus;
+import com.goforit.firstapple.user.model.enums.UserType;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.Date;
 
@@ -33,11 +38,13 @@ public class UserManagerImpl implements UserManager {
     private static final String SRC_MAIL_KEY="src_mail";
     private static final String REGISTER_MAIL_SUB="register_sub";
 
-    @Autowired
-    private UserMapper userMapper;
+    private static final Logger LOGGER= LoggerFactory.getLogger(UserManagerImpl.class);
 
     @Autowired
     private MailSender mailSender;
+
+    @Autowired
+    private UserMapper userMapper;
 
     @Autowired
     private SystemConfigMapper systemConfigMapper;
@@ -47,6 +54,10 @@ public class UserManagerImpl implements UserManager {
 
     @Autowired
     private UserTokenMapper userTokenMapper;
+
+    @Autowired
+    private TransactionTemplate transactionTemplate;
+
 
     @Override
     public User register(User user) throws UserRegisterError{
@@ -125,7 +136,7 @@ public class UserManagerImpl implements UserManager {
 
     @Override
     public UserOperationToken getLatest(String username, UserOperationType type) {
-        return null;
+        return userOperationTokenMapper.getLatest(username,type);
     }
 
     @Override
@@ -150,13 +161,19 @@ public class UserManagerImpl implements UserManager {
     }
 
     @Override
-    public UserToken Login(String userInfo, String password, UserLoginType loginType) {
+    public UserToken login(String userInfo, String password, UserLoginType loginType, UserType userType) {
 
         //验证
         User loginUser=User.buildLoginCheckUser(userInfo,password,loginType);
         User user=userMapper.checkUserLogin(loginUser);
 
+        //user是否存在
         if(null!=user){
+            return null;
+        }
+
+        //验证type  TODO 抽象下
+        if(!checkLoginUserType(user.getId(),userType)){
             return null;
         }
 
@@ -164,7 +181,28 @@ public class UserManagerImpl implements UserManager {
         return generatorUserToken(user.getId());
     }
 
+    private boolean checkLoginUserType(String userId,UserType userType){
+        //TODO
+        return true;
+    }
+
     @Override
+    public boolean logout(String token) {
+
+        UserToken userToken=userTokenMapper.findByToken(token);
+
+        if(null!=userToken){
+            userTokenMapper.deleteByUserId(userToken.getUserId());
+            return true;
+        }else {
+            LOGGER.error("not find UserToken by token=[{}]",token);
+
+            return false;
+        }
+    }
+
+    @Override
+    @Transactional
     public User verifyToken(String token) {
 
         UserToken userToken=userTokenMapper.findByToken(token);
@@ -177,10 +215,10 @@ public class UserManagerImpl implements UserManager {
         userTokenMapper.updateExpiredTime(userToken);
 
         return userMapper.get(userToken.getUserId());
-
     }
 
     @Override
+    @Transactional
     public UserToken generatorUserToken(String userId) {
 
         userTokenMapper.deleteByUserId(userId);
