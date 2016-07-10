@@ -49,6 +49,7 @@
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <property name="mapperLocations" value="/WEB-INF/spring/sqlmap/*.xml"/>
+        <property name="typeAliasesPackage" value="com.goforit.firstapple.user.model;com.goforit.firstapple.common.model;com.goforit.firstapple.forum.model"/>
         <!--<property name="typeAliasesPackage" value="com.goforit.firstapple"/>-->
     </bean>
 
