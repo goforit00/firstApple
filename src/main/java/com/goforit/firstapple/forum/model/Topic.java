@@ -27,6 +27,16 @@ public class Topic {
 
     private Date modifiedTime;
 
+    public void addPost(Date latestPostTime){
+        this.postNum++;
+        this.latestPostTime=latestPostTime;
+    }
+
+    public void deletePost(){
+        //TODO latestPostTime 需要更新
+        this.postNum--;
+    }
+
     public long getId() {
         return id;
     }

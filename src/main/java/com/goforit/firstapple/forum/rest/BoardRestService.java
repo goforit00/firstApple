@@ -13,6 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import java.util.List;
 
 /**
@@ -20,7 +25,7 @@ import java.util.List;
  */
 
 @Controller
-@RequestMapping(value = "/forum/board/")
+@Path("/forum/board/")
 public class BoardRestService {
 
     @Autowired
@@ -29,22 +34,29 @@ public class BoardRestService {
     @Autowired
     private TopicService topicService;
 
-    @RequestMapping(value = "/create",method = RequestMethod.POST)
-    public @ResponseBody Board createBoard(Board board){
+    //TODO 填充user
+    @Path("/create")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Board createBoard(Board board){
         Preconditions.checkNotNull(board);
 
         return boardService.create(board);
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    public @ResponseBody List<Board> getAllBoard(){
+    @Path("/")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Board> getAllBoard(){
         return boardService.getAll();
     }
 
-    @RequestMapping(value = "{boardId}/topic",method = RequestMethod.GET)
-    public @ResponseBody List<Topic> getAllTopicByBoard(@PathVariable String boardId){
+    @Path("/{boardId}/topic")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Topic> getAllTopicByBoard(@PathVariable String boardId){
 
-        Preconditions.checkArgument(StringUtils.isNotBlank(boardId),"boardId can't be null");
+        Preconditions.checkArgument(StringUtils.isNotBlank(boardId),"board id can't be null");
 
         return topicService.getAllTopicsByBoardId(Long.valueOf(boardId));
     }

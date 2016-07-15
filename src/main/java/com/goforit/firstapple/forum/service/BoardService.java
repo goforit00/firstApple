@@ -9,8 +9,11 @@ import java.util.List;
  */
 public interface BoardService {
 
+    //~~~~ operate method ~~~~
     Board create(Board board);
 
+
+    //~~~~ query method ~~~~
     List<Board> getAll();
 
 }

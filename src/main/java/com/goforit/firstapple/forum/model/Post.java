@@ -17,9 +17,9 @@ public class Post {
 
     private String postText;
 
-    private int likeNum;
+    private int likeNum = 0;
 
-    private int dislikeNum;
+    private int dislikeNum = 0;
 
     private Date createdTime;
 

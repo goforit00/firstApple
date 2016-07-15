@@ -11,19 +11,23 @@ import java.util.List;
  */
 public interface TopicService {
 
-    List<Topic> getAllTopicsByBoardId(long boardId);
+    //~~~~ operate method ~~~~
 
     Topic createTopic(Topic topic,Post firstPost);
 
-    Topic get(long id);
-
-    boolean deleteTopic(long id);
+    Boolean deleteTopic(Long id);
 
     Post addPost(Post post);
 
-    boolean deletePost(long id);
+    Boolean deletePost(Long id);
 
-    Post updatePostLikeNum(long topicId, long postId, PostLikeType type);
+    Post updatePostLikeNum(Long topicId, Long postId, PostLikeType type);
+
+    //~~~~ query method ~~~~
+
+    List<Topic> getAllTopicsByBoardId(Long boardId);
+
+    Topic get(Long id);
 
 
 }
