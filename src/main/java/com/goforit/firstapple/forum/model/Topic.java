@@ -15,6 +15,7 @@ public class Topic {
 
     private String title;
 
+    //TODO 替换掉user模型,user模型展示的太多了
     private User createUser;
 
     private long viewNum;

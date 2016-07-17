@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.goforit.firstapple.forum.mapper.BoardMapper">
+    <resultMap id="boardMap" type="com.goforit.firstapple.forum.model.Board">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="description" column="description"/>
+        <result property="topicNum" column="topic_num"/>
+        <result property="userId" column="user_id"/>
+        <result property="createdTime" column="created_time"/>
+        <result property="modifiedTime" column="modified_time"/>
+    </resultMap>
+
+    <sql id="board_colum">
+        id,name,description,topic_num,user_id,created_time,modified_time
+    </sql>
+</mapper>

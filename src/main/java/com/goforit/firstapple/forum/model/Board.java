@@ -15,7 +15,7 @@ public class Board {
 
     private int topicNum;
 
-    private String createdUserId;
+    private String userId;
 
     private Date createdTime;
 
@@ -53,12 +53,12 @@ public class Board {
         this.topicNum = topicNum;
     }
 
-    public String getCreatedUserId() {
-        return createdUserId;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setCreatedUserId(String createdUserId) {
-        this.createdUserId = createdUserId;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public Date getCreatedTime() {
