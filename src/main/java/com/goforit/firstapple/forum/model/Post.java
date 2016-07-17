@@ -1,5 +1,6 @@
 package com.goforit.firstapple.forum.model;
 
+import com.goforit.firstapple.forum.model.enums.PostLikeType;
 import com.goforit.firstapple.user.model.User;
 
 import java.util.Date;
@@ -25,6 +26,19 @@ public class Post {
 
     private Date modifiedTime;
 
+    //~~~~ public method ~~~~
+    public Post changeLikeOrDislike(PostLikeType type){
+        if(PostLikeType.LIKE==type){
+            this.likeNum++;
+        }else if (PostLikeType.DISLIKE==type){
+            this.dislikeNum++;
+        }
+
+        return this;
+    }
+
+
+    //~~~~ setter and getter~~~~
     public long getId() {
         return id;
     }

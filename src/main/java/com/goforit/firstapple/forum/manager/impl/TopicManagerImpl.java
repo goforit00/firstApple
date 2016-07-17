@@ -48,6 +48,9 @@ public class TopicManagerImpl implements TopicManager{
     public Post addPostInTopic(Post post) {
 
         Topic topic=topicMapper.selectForUpdate(post.getTopicId(),null);
+        if(null==topic){
+            throw new RuntimeException("not find topic find by id="+post.getTopicId());
+        }
 
         postMapper.create(post);
 
@@ -64,7 +67,15 @@ public class TopicManagerImpl implements TopicManager{
 
         Post post=postMapper.selectForUpdate(postId);
 
+        if(null==post){
+            throw new RuntimeException("not find post by post id="+postId);
+        }
+
         Topic topic=topicMapper.selectForUpdate(post.getTopicId(),null);
+
+        if(null==topic){
+            throw new RuntimeException("not find topic by topic id="+post.getTopicId());
+        }
 
         topic.deletePost();
 
@@ -76,17 +87,30 @@ public class TopicManagerImpl implements TopicManager{
     }
 
     @Override
+    @Transactional
+    //TODO remove topicId
     public Post updatePostLikeNum(Long topicId, Long postId, PostLikeType type) {
-        return null;
+
+        Post post=postMapper.selectForUpdate(postId);
+
+        if(null==post){
+            throw new RuntimeException("not find post by id="+postId);
+        }
+
+        post.changeLikeOrDislike(type);
+
+        postMapper.update(post);
+
+        return postMapper.findById(postId);
     }
 
     @Override
     public List<Topic> findAllTopicInBoard(Long boardId) {
-        return null;
+        return topicMapper.findByBoardId(boardId);
     }
 
     @Override
     public Topic findById(Long topicId) {
-        return null;
+        return topicMapper.get(topicId);
     }
 }
