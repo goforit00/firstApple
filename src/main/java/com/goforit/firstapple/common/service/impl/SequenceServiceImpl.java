@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
  * Created by junqingfjq on 16/6/24.
  */
 
-@Service
+@Service(value = "sequenceService")
 public class SequenceServiceImpl implements SequenceService {
 
     private static final Logger LOGGER= LoggerFactory.getLogger(SequenceServiceImpl.class);

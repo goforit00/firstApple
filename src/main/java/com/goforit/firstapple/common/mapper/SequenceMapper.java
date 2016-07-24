@@ -7,5 +7,5 @@ import com.goforit.firstapple.common.model.SequenceDO;
  */
 public interface SequenceMapper {
 
-    int add(SequenceDO sequenceDO);
+    void add(SequenceDO sequenceDO);
 }

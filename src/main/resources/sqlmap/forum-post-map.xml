@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goforit.firstapple.forum.mapper.PostMapper">
+    <resultMap id="postResultMap" type="com.goforit.firstapple.forum.model.Post">
+        <id property="id" column="id"/>
+        <result property="topicId" column="topic_id"/>
+        <!--<result property="createUser" column="user_id"/>-->
+        <result property="postText" column="post_text"/>
+        <result property="likeNum" column="like_num"/>
+        <result property="dislikeNum" column="dislike_num"/>
+        <result property="createdTime" column="created_time"/>
+        <result property="modifiedTime" column="modified_time"/>
+    </resultMap>
+
+    <sql id="post_column">
+        id,topic_id,user_id,post_text,like_num,dislike_num,created_time,modified_time
+    </sql>
+
+    <insert id="create" useGeneratedKeys="true" flushCache="true">
+        insert into forum_post(topic_id,user_id,post_text,like_num,dislike_num,created_time,modified_time)
+        values(#{topicId},#{createUser.id},#{postText},#{likeNum},#{dislikeNum},NOW(),NOW())
+    </insert>
+
+    <update id="update" flushCache="true">
+        update forum_post set topic_id=#{topicId}, user_id=#{createUser.id}, post_text=#{postTest}, like_num=#{likeNum},
+        dislike_num=#{dislikeNum}, modifiedTime=NOW() where id=#{id}
+    </update>
+
+    <delete id="delete" flushCache="true">
+        delete from forum_post where id=#{id}
+    </delete>
+
+    <select id="selectForUpdate" resultMap="postResultMap" useCache="false">
+      select <include refid="post_column"/> from forum_post where id=#{postId} for update
+    </select>
+
+    <select id="get" resultMap="postResultMap" useCache="false">
+        select <include refid="post_column"/> from forum_post where id=#{id}
+    </select>
+
+</mapper>

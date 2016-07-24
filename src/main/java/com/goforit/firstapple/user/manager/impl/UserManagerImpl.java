@@ -94,6 +94,7 @@ public class UserManagerImpl implements UserManager {
 
         //密码加密
         user.encryptionPassword();
+        user.create();
 
         userMapper.create(user);
 

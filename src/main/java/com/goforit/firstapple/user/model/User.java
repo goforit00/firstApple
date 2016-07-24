@@ -1,6 +1,8 @@
 package com.goforit.firstapple.user.model;
 
+import com.goforit.firstapple.common.service.SequenceService;
 import com.goforit.firstapple.common.utils.EncryptionUtil;
+import com.goforit.firstapple.common.utils.SequenceServiceUitl;
 import com.goforit.firstapple.user.model.enums.UserLoginType;
 import com.goforit.firstapple.user.model.enums.UserStatus;
 
@@ -56,13 +58,24 @@ public class User {
                 user.setUsername(userInfo);
                 break;
         }
-        user.setPassword(EncryptionUtil.encryptMD5(password));
+        user.setPassword(password);
+        user.encryptionPassword();
 
         return user;
     }
 
     public User encryptionPassword(){
         this.setPassword(EncryptionUtil.encryptMD5(this.password));
+        return this;
+    }
+
+    public User create(){
+        //加密
+        this.encryptionPassword();
+
+        //生成id
+        this.setId(SequenceServiceUitl.generate(SequenceService.TableName.USER));
+
         return this;
     }
 

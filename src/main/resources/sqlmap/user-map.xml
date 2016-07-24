@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.goforit.firstapple.user.mapper.UserMapper">
+
+    <resultMap id="userResultMap" type="User">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="phone" column="phone"/>
+        <result property="email" column="email"/>
+        <result property="age" column="age"/>
+        <result property="sex" column="sex"/>
+        <result property="realName" column="real_name"/>
+        <result property="status" column="status"/>
+        <result property="lastLoginTime" column="last_login_time"/>
+        <result property="registerTime" column="register_time"/>
+        <result property="modifiedTime" column="modified_time"/>
+    </resultMap>
+
+    <sql id="userColumns">
+        id,username,password,phone,email,age,sex,real_name,status,last_login_time,register_time,modified_time
+    </sql>
+
+    <insert id="create" flushCache="true" >
+        insert into user(id,username,password,phone,email,age,sex,real_name,status,last_login_time,register_time,modified_time)
+        values(#{id},#{username},#{password},#{phone},#{email},#{age},#{sex},#{realName},#{status},NOW(),NOW(),NOW())
+    </insert>
+
+    <delete id="deleteByUsername" flushCache="true">
+        delete from user where username=#{username}
+    </delete>
+
+    <update id="update" flushCache="true">
+        update user set username=#{username}, password=#{password}, phone=#{phone},email=#{email},age=#{age},sex=#{sex},
+        real_name=#{realName},status=#{status},last_login_time=#{lastLoginTime},modifiedTime=NOW() where id=#{id}
+    </update>
+
+    <select id="checkUserLogin" resultMap="userResultMap">
+        select <include refid="userColumns"/> from user where password=#{password}
+        <if test="username!=null">
+            and username=#{username}
+        </if>
+        <if test="phone!=null">
+            and phone=#{phone}
+        </if>
+        <if test="email!=null">
+            and email=#{email}
+        </if>
+    </select>
+
+    <select id="get" resultMap="userResultMap">
+        select <include refid="userColumns"/> from user where id=#{id}
+    </select>
+
+    <select id="findByUserName" resultMap="userResultMap">
+        select <include refid="userColumns"/> from user where username=#{username}
+    </select>
+
+    <select id="findByPhone" resultMap="userResultMap">
+        select <include refid="userColumns"/> from user where phone=#{phone}
+    </select>
+
+    <select id="findByEmail" resultMap="userResultMap">
+        select <include refid="userColumns"/> from user where email=#{email}
+    </select>
+
+</mapper>

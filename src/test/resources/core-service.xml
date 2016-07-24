@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+       http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd"
+       default-autowire="byName">
+
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <!-- persistence config -->
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <bean id='dataSource' class="org.apache.commons.dbcp.BasicDataSource">
+        <property name='driverClassName'>
+            <value>com.mysql.jdbc.Driver</value>
+        </property>
+        <property name='url'>
+            <value>jdbc:mysql://localhost:3306/first_apple?useUnicode=true&amp;characterEncoding=utf8</value>
+        </property>
+        <property name='username'>
+            <value>root</value>
+        </property>
+        <property name='password'>
+            <value>123456</value>
+        </property>
+    </bean>
+
+
+    <!-- 事务模板 -->
+    <bean id="transactionTemplate"
+          class="org.springframework.transaction.support.TransactionTemplate">
+        <property name="transactionManager" ref="transactionManager" />
+    </bean>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="mapperLocations" value="classpath*:sqlmap/*.xml"/>
+        <property name="typeAliasesPackage" value="com.goforit.firstapple.user.model;com.goforit.firstapple.common.model;com.goforit.firstapple.forum.model"/>
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage"
+                  value="com.goforit.firstapple.user.mapper;com.goforit.firstapple.common.mapper;com.goforit.firstapple.forum.mapper"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+
+    <!-- service -->
+    <context:component-scan base-package="com.goforit.firstapple" />
+    <!-- service -->
+
+
+    <bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="smtp.sina.com"/>
+        <property name="protocol" value="smtp" />
+        <!-- 465 for Gamil -->
+        <property name="port" value="25"/>
+        <property name="username" value="xxx@sina.com"/>
+        <property name="password" value="xxx"/>
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.transport.protocol">smtp</prop>
+                <prop key="mail.smtp.auth">true</prop>
+                <!-- true for Gamil -->
+                <prop key="mail.smtp.starttls.enable">false</prop>
+                <prop key="mail.debug">true</prop>
+            </props>
+        </property>
+    </bean>
+
+
+
+</beans>

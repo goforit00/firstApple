@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.goforit.firstapple.forum.mapper.BoardMapper">
-    <resultMap id="boardMap" type="com.goforit.firstapple.forum.model.Board">
+    <resultMap id="boardResultMap" type="com.goforit.firstapple.forum.model.Board">
         <id property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="description" column="description"/>
@@ -16,4 +16,18 @@
     <sql id="board_colum">
         id,name,description,topic_num,user_id,created_time,modified_time
     </sql>
+
+    <insert id="create">
+        insert into forum_board(name,description,topic_num,user_id,created_time,modified_time) values(#{name},#{description},#{topicNum},#{userId},NOW(),NOW())
+    </insert>
+
+    <select id="get" resultMap="boardResultMap" useCache="false">
+        select <include refid="board_colum"/> from forum_board where id=#{id}
+    </select>
+
+    <select id="getAll" resultMap="boardResultMap" useCache="false">
+        select <include refid="board_colum"/> from forum_board
+    </select>
+
+
 </mapper>

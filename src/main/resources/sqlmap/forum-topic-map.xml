@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goforit.firstapple.forum.mapper.TopicMapper">
+    <resultMap id="topicResultMap" type="com.goforit.firstapple.forum.model.Topic">
+        <id property="id" column="id"/>
+        <result property="boardId" column="board_id"/>
+        <result property="title" column="title"/>
+        <!--<result property="createUser" column="user_id"/>-->
+        <result property="viewNum" column="view_num"/>
+        <result property="postNum" column="post_num"/>
+        <result property="latestPostTime" column="latest_post_time"/>
+        <result property="createdTime" column="created_time"/>
+        <result property="modifiedTime" column="modified_time"/>
+    </resultMap>
+
+    <sql id="topic_column">
+        id,board_id,title,user_id,view_num,post_num,latest_post_time,created_time,modified_time
+    </sql>
+
+    <insert id="create" useGeneratedKeys="true" flushCache="true">
+        insert into forum_topic(board_id,title,user_id,view_num,post_num,latest_post_time,created_time,modified_time)
+        values(#{boardId},#{title},#{createUser.id},#{viewNum},#{postNum},#{latestPostTime},#{createdTime},#{modifiedTime})
+    </insert>
+
+    <update id="updateTopic" flushCache="true">
+        update forum_topic set board_id=#{boardId}, title=#{title}, user_id=#{createUser.id}, post_num=#{postNum},
+        latest_post_time=#{latestPostTime},modified_time=NOW() where id=#{id}
+    </update>
+
+    <delete id="delete" flushCache="true">
+        delete from forum_topic where id=#{id}
+    </delete>
+
+    <select id="selectForUpdate" timeout="5">
+        select <include refid="topic_column"/> from forum_topic where true
+        <if test=" id != null">
+            and id=#{id}
+        </if>
+        <if test=" title != null">
+            and title=#{title}
+        </if>
+        for update
+    </select>
+
+    <select id="findByBoardId" resultMap="topicResultMap" useCache="false">
+        select <include refid="topic_column"/> from forum_topic where board_id=#{boardId}
+    </select>
+
+    <select id="get" resultMap="topicResultMap" useCache="false">
+        select <include refid="topic_column"/> from forum_topic where id=#{id}
+    </select>
+
+</mapper>

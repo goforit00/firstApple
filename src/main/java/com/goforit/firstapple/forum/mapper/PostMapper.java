@@ -19,7 +19,7 @@ public interface PostMapper {
     //~~~~ query method ~~~~
     Post selectForUpdate(long postId);
 
-    Post findById(long id);
+    Post get(long id);
 
 
 

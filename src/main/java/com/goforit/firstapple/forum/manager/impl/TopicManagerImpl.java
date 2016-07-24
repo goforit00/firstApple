@@ -101,7 +101,7 @@ public class TopicManagerImpl implements TopicManager{
 
         postMapper.update(post);
 
-        return postMapper.findById(postId);
+        return postMapper.get(postId);
     }
 
     @Override

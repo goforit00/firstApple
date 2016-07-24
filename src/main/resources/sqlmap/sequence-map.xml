@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.goforit.firstapple.common.mapper.SequenceMapper">
+    <resultMap id="sequenceResultMap" type="com.goforit.firstapple.common.model.SequenceDO">
+        <id property="id" column="id"/>
+        <result property="tableName" column="table_name"/>
+        <result property="createdTime" column="created_time"/>
+    </resultMap>
+
+    <insert id="add" flushCache="true" useGeneratedKeys="true">
+        insert into sequence(table_name,created_time) value(#{tableName},NOW())
+    </insert>
+</mapper>

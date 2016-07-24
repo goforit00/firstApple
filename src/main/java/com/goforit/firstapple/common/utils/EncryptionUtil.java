@@ -15,7 +15,7 @@ public class EncryptionUtil {
 
     public static String encryptMD5(String password){
         try{
-            if(StringUtils.isNotBlank(password)){
+            if(StringUtils.isBlank(password)){
                 return null;
             }
             MessageDigest md5 = MessageDigest.getInstance("MD5");

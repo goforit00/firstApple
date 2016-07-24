@@ -9,6 +9,10 @@ public interface UserMapper {
 
     void create(User user);
 
+    void deleteByUsername(String username);
+
+    User update(User user);
+
     User get(String id);
 
     User findByUserName(String username);
@@ -17,9 +21,6 @@ public interface UserMapper {
 
     User findByEmail(String email);
 
-    User update(User user);
-
     User checkUserLogin(User user);
 
-    void deleteByUsername(String username);
 }
